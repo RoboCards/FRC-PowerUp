@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Robot extends IterativeRobot {
 	//DifferentialDrive m_drive;
-	Joystick stick;
+	Joystick stickRight;
+	Joystick stickLeft;
 	Timer timer;
 	Gyro gyro;
 	Spark mc_frontLeft, mc_frontRight, mc_rearLeft, mc_rearRight, mc_arm;
@@ -29,7 +30,8 @@ public class Robot extends IterativeRobot {
 	}
 	@Override
 	public void robotInit() {
-		stick = new Joystick(0);
+		stickRight = new Joystick(0);
+		stickLeft = new Joystick(1);
 		
 		timer = new Timer();
 		
@@ -58,21 +60,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		double yAxis = stick.getY();
-		double zAxis = stick.getZ();
+		double stickRightSpeed = stickRight.getY();
+		double stickLeftSpeed = stickLeft.getY();
 			
-		
-		if ((yAxis == 0)) {
-			mc_frontLeft.set(zAxis);
-			mc_rearLeft.set(zAxis);
-			mc_frontRight.set(zAxis);
-			mc_rearRight.set(zAxis);
-		} else if ((zAxis == 0)) {
-			mc_frontLeft.set(yAxis);
-			mc_rearLeft.set(yAxis);
-			mc_frontRight.set(-yAxis);
-			mc_rearRight.set(-yAxis);
-		}
+		cg_left.setSpeed (stickLeftSpeed)
+		cg_right.setSpeed (stickRightSpeed)
 		
 		
 		/*if trigger down and arm not up then
@@ -83,9 +75,9 @@ public class Robot extends IterativeRobot {
 		 * 
 		 * */
 		
-		if (stick.getRawButtonPressed(1)) {
+		/*if (stick.getRawButtonPressed(1)) {
 			mc_arm.set(0);
-		}
+		}*/
 		
 	}
 
